@@ -10,9 +10,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /*
@@ -25,8 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
 	@RequestMapping("/welcome")
-	public ModelAndView helloWorld() {
-		
+	public ModelAndView findGhost(@RequestParam("address") String address) {
+		System.out.println(address);
 		String text = "";
 		String text2 = "";
 		String text3 = "";
