@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import com.gc.util.APICredentials;
+import com.gc.util.Address;
 
 
 /**
@@ -30,7 +31,12 @@ public class HomeController {
 
 	@RequestMapping("/welcome")
 	public ModelAndView findGhost(@RequestParam("address") String address) {
-		System.out.println(address);
+		String test = Address.formatAddress(address);
+		Double lat = Address.getLat(test);
+		Double lng = Address.getLng(test);
+		
+		System.out.println("lat: "+ lat + ", lng: "+ lng);
+		
 		String text = "";
 		String text2 = "";
 		String text3 = "";
