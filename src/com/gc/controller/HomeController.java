@@ -32,8 +32,10 @@ public class HomeController {
 	@RequestMapping("/welcome")
 	public ModelAndView findGhost(@RequestParam("address") String address) {
 		String test = Address.formatAddress(address);
+		System.out.println(test);
 		Double lat = Address.getLat(test);
 		Double lng = Address.getLng(test);
+		
 		
 		System.out.println("lat: "+ lat + ", lng: "+ lng);
 		

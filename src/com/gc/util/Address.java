@@ -19,11 +19,14 @@ public class Address {
 		userInput = userInput.trim();
 		String[] component = userInput.split(" ");
 		
-		if(component.length == 2) {
-			formatted = component[0] + "+" + component[1] + ",+Detroit,+MI"	;
-		}
-		else if(component.length == 3) {
-			formatted = component[0] + "+" + component[1] + "+" + component[2] + ",+Detroit,+MI"	; 
+		for (int i=0; i<component.length; i++) {
+			formatted += component[i];
+			if(i != (component.length -1)) {
+				formatted += "+";
+			}
+			else {
+				formatted += ",+Detroit,+MI";
+			}
 		}
 		
 		return formatted;
