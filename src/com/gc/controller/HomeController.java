@@ -16,6 +16,7 @@ import com.gc.util.HibernateUtil;
 
 
 
+
 /**
  * Project Name: Modern Ghost
  * @author Emily Blanford, Nick Soule, Jordan Zwart, Ronald Kim
@@ -27,31 +28,32 @@ public class HomeController {
 
 	@RequestMapping("welcome")
 	public ModelAndView findGhost(@RequestParam("address") String address) {
-		System.out.println("yo");
-		String text = "";
-		
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-
-        Session session = sessionFactory.openSession();
-        // the transaction represents the unit of work/actual implementation of code
-        Transaction tx = session.beginTransaction();
-        Criteria crit = session.createCriteria(Address.class);
-        ArrayList<Address> ghostList = (ArrayList<Address>) crit.list();
-        text = ghostList.get(1).getAddress();
+//		System.out.println("yo");
+//		String text = "";
+//		
+//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//
+//        Session session = sessionFactory.openSession();
+//        // the transaction represents the unit of work/actual implementation of code
+//        Transaction tx = session.beginTransaction();
+//        Criteria crit = session.createCriteria(Address.class);
+//        ArrayList<Address> ghostList = (ArrayList<Address>) crit.list();
+//        text = ghostList.get(1).getAddress();
         
-        
-        
-        tx.commit();
-        session.close();
+//        tx.commit();
+//        session.close();
 //		String test = Address.formatAddress(address);
 //		System.out.println(test);
 //		Double lat = Address.getLat(test);
 //		Double lng = Address.getLng(test);
+		
+		Double lat = 42.3359526;
+		Double lng = -83.04977190000001;
+		
+		System.out.println(distance(lat, 42.3359283, lng, -83.0519076));
+		
 //		
-//		
-//		System.out.println("lat: "+ lat + ", lng: "+ lng);
-//		
-//		String text = "";
+		String text = "";
 //		String text2 = "";
 //		String text3 = "";
 //		try {
@@ -99,5 +101,21 @@ public class HomeController {
 //			e.printStackTrace();
 //		}
 		return new ModelAndView("welcome", "message", text);
+	}
+	
+	public static double distance(double lat1, double lat2, double lon1, double lon2) {
+
+		final int R = 6371; // Radius of the earth
+
+		double latDistance = Math.toRadians(lat2 - lat1);
+		double lonDistance = Math.toRadians(lon2 - lon1);
+		double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + Math.cos(Math.toRadians(lat1))
+				* Math.cos(Math.toRadians(lat2)) * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		double distance = R * c * 1000; // convert to meters
+
+		distance = Math.pow(distance, 2);
+
+		return Math.sqrt(distance);
 	}
 }
