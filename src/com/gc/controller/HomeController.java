@@ -59,16 +59,28 @@ public class HomeController {
 			double ghostLng = Double.parseDouble(ghostList.get(i).getX());
 			double distance = distance(lat, ghostLat, lng, ghostLng);
 			distance = distance * 3.28084;
-			if (distance <= 600) {
-				score += 85;
-			} else if (distance <= 900) {
-				score += 72;
-			} else if (distance <= 1000) {
-				score += 61;
-			} else if (distance <= 1200) {
-				score += 43;
-			} else if (distance <= 1500) {
-				score += 24;
+			if (distance <= 50) {
+				score += 73;
+			} else if (distance <= 100 && distance >= 51) {
+				score += 65;
+			} else if (distance <= 200 && distance >= 101) {
+				score += 54;
+			} else if (distance <= 300 && distance >= 201) {
+				score += 47;
+			} else if (distance <= 400 && distance >= 301) {
+				score += 39;
+			} else if (distance <= 500 && distance >= 401) {
+				score += 31;
+			} else if (distance <= 600 && distance >= 501) {
+				score += 27;
+			} else if (distance <= 700 && distance >= 601) {
+				score += 23;
+			} else if (distance <= 800 && distance >= 701) {
+				score += 19;
+			} else if (distance <= 900 && distance >= 801) {
+				score += 12;
+			} else if (distance <= 1000 && distance >= 901) {
+				score += 5;
 			}
 		}
 
