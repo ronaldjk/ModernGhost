@@ -96,13 +96,21 @@ public class HomeController {
 		}
 		model.addAttribute("score", score);
 		
+		
+		
 		for(int i=0; i < hitDbDist.size(); i++) {
 			listOfHits += ("<li>" + "This location is " + hitDbDist.get(i) + " feet away from the known haunted location: " + hitDbPlace.get(i) + "</li>");
 		}
 		
 		for(int i=0; i < hitApiDist.size(); i++) {
 			listOfHits += ("<li>" + "This location is " + hitApiDist.get(i) + " feet away from a death." + "</li>");
+		
 		}
+		
+		score = 0;
+		hitDbDist.clear();
+		hitDbPlace.clear();
+		hitApiDist.clear();
 		
 		return new ModelAndView("data", "data", listOfHits);
 	}
