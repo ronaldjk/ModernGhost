@@ -38,7 +38,7 @@ public class HomeController {
 	@RequestMapping("welcome")
 	public ModelAndView findGhost(@RequestParam("address") String address) {
 		// returned scored
-		int score = 2;
+		int score = 0;
 
 		// user input & convert to latitude and longitude
 		String test = Address.formatAddress(address);
@@ -59,27 +59,30 @@ public class HomeController {
 			double ghostLng = Double.parseDouble(ghostList.get(i).getX());
 			double distance = distance(lat, ghostLat, lng, ghostLng);
 			distance = distance * 3.28084;
-			if (distance <= 50) {
+			if (distance <= 25) {
+				score += 85;
+			} else if (distance <= 50) {
 				score += 73;
-			} else if (distance <= 100 && distance >= 51) {
+			
+			} else if (distance <= 100) {
 				score += 65;
-			} else if (distance <= 200 && distance >= 101) {
+			} else if (distance <= 200) {
 				score += 54;
-			} else if (distance <= 300 && distance >= 201) {
+			} else if (distance <= 300) {
 				score += 47;
-			} else if (distance <= 400 && distance >= 301) {
+			} else if (distance <= 400) {
 				score += 39;
-			} else if (distance <= 500 && distance >= 401) {
+			} else if (distance <= 500) {
 				score += 31;
-			} else if (distance <= 600 && distance >= 501) {
+			} else if (distance <= 600) {
 				score += 27;
-			} else if (distance <= 700 && distance >= 601) {
+			} else if (distance <= 700) {
 				score += 23;
-			} else if (distance <= 800 && distance >= 701) {
+			} else if (distance <= 800) {
 				score += 19;
-			} else if (distance <= 900 && distance >= 801) {
+			} else if (distance <= 900) {
 				score += 12;
-			} else if (distance <= 1000 && distance >= 901) {
+			} else if (distance <= 1000) {
 				score += 5;
 			}
 		}
