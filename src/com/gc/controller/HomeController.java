@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gc.dao.AddressDAOImp;
 import com.gc.model.Address;
 import com.gc.util.APICredentials;
 import com.gc.util.HibernateUtil;
@@ -46,11 +47,10 @@ public class HomeController {
 		Double lng = Address.getLng(test);
 
 		// Create an ArrayList of Address objects from database
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		Criteria crit = session.createCriteria(Address.class);
-		ArrayList<Address> ghostList = (ArrayList<Address>) crit.list();
+		AddressDAOImp dao = new AddressDAOImp();
+		ArrayList<Address> ghostList = dao.getAllAddress();	
+		
+		
 
 		// Loop through the database ArrayList & calculate score
 		// haunted locations
@@ -83,10 +83,6 @@ public class HomeController {
 				score += 5;
 			}
 		}
-
-		// close session
-		tx.commit();
-		session.close();
 
 		try {
 			// 2014, 2015, 2016 Detroit data
