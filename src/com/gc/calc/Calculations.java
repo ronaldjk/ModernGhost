@@ -24,7 +24,7 @@ public class Calculations {
 		return Math.sqrt(distance);
 	}
 	
-	public static int calcApiScore(int score, Double lat, Double lng, JSONArray arr, int year) {
+	public static int calcApiScore(int score, Double lat, Double lng, JSONArray arr, int year, ArrayList<Integer> hitDistance) {
 		double ghostLat = 0.0;
 		double ghostLng = 0.0;
 		for (int i = 0; i < arr.length(); i++) {
@@ -40,49 +40,78 @@ public class Calculations {
 			double distance = distance(lat, ghostLat, lng, ghostLng);
 			distance = distance * 3.28084;
 			if (distance <= 50) {
+				hitDistance.add((int) distance);
 				score += 73;
 			} else if (distance <= 100) {
+				hitDistance.add((int) distance);
 				score += 60;
 			} else if (distance <= 200) {
+				hitDistance.add((int) distance);
 				score += 46;
 			} else if (distance <= 250) {
+				hitDistance.add((int) distance);
 				score += 33;
 			} else if (distance <= 300) {
+				hitDistance.add((int) distance);
 				score += 13;
 			}
 		}
 		return score;
 	}
 	
-	public static int calcDbScore(int score, Double lat, Double lng, ArrayList<Address> ghostList) {
+	public static int calcDbScore(int score, Double lat, Double lng, ArrayList<Address> ghostList, ArrayList<String> hitPlace, ArrayList<Integer> hitDistance) {
 		for (int i = 0; i < ghostList.size(); ++i) {
 			double ghostLat = Double.parseDouble(ghostList.get(i).getY());
 			double ghostLng = Double.parseDouble(ghostList.get(i).getX());
 			double distance = distance(lat, ghostLat, lng, ghostLng);
 			distance = distance * 3.28084;
 			if (distance <= 25) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 85;
 			} else if (distance <= 50) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 73;
 			} else if (distance <= 100) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 65;
 			} else if (distance <= 200) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 54;
 			} else if (distance <= 300) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 47;
 			} else if (distance <= 400) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 39;
 			} else if (distance <= 500) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 31;
 			} else if (distance <= 600) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 27;
 			} else if (distance <= 700) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 23;
 			} else if (distance <= 800) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 19;
 			} else if (distance <= 900) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 12;
 			} else if (distance <= 1000) {
+				hitDistance.add((int) distance);
+				hitPlace.add(ghostList.get(i).getPlace());
 				score += 5;
 			}
 		}

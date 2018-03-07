@@ -5,8 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+body {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+</style>
 </head>
 <body>
-
+<h3>Your house was rated at ${score}% because: </h3>
+<br>
+${data}
 </body>
 </html>
