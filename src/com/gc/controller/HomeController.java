@@ -65,6 +65,11 @@ public class HomeController {
 			score = 100;
 		}
 		
+		if(score >= 85) {
+			Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
+			dao.addAddress(toAdd);
+		}
+		
 		return new ModelAndView("welcome", "message", score);
 	}
 	

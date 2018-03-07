@@ -28,6 +28,12 @@ public class Address {
 	public Address() {
 
 	}
+	public Address( String address, String y, String x) {
+		//this.place = place;
+		this.address = address;
+		this.y = y;
+		this.x = x;
+	}
 
 	public Address(String place, String address, String y, String x) {
 		this.place = place;
