@@ -36,45 +36,56 @@ public class HomeController {
 
 	@RequestMapping("welcome")
 	public ModelAndView findGhost(@RequestParam("address") String address) {
-		String text1 = "";
+		//returned scored
 		int score = 0;
 
+		//user input & convert to latitude and longitude
 		String test = Address.formatAddress(address);
 		System.out.println(test);
 		Double lat = Address.getLat(test);
 		Double lng = Address.getLng(test);
 
+		//Create an ArrayList of Address objects from database
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Criteria crit = session.createCriteria(Address.class);
 		ArrayList<Address> ghostList = (ArrayList<Address>) crit.list();
 
+		//Loop through the database ArrayList & calculate score
 		for (int i = 0; i < ghostList.size(); ++i) {
 			double ghostLat = Double.parseDouble(ghostList.get(i).getY());
 			double ghostLng = Double.parseDouble(ghostList.get(i).getX());
 			double distance = distance(lat, ghostLat, lng, ghostLng);
 			distance = distance * 3.28084;
-			if (distance < 500) {
-				score = score + 55;
+			if (distance <= 600) {
+				score += 85;
+			}
+			else if (distance <= 900) {
+				score += 72;
+			}
+			else if (distance <= 1000) {
+				score += 61;
+			}
+			else if (distance <= 1200) {
+				score += 43;
+			}
+			else if (distance <= 1500) {
+				score += 24;
 			}
 		}
 
-		text1 = ghostList.get(1).getAddress();
-
+		// close session
 		tx.commit();
 		session.close();
 
-		String text2 = "";
-		String text3 = "";
 		try {
-			HttpClient http14 = HttpClientBuilder.create().build();
-			HttpHost host14 = new HttpHost("data.detroitmi.gov", 443, "https");
-			HttpGet getPage14 = new HttpGet("/resource/hhs5-b2n3.json?$$app_token=" + APICredentials.DATADETROIT_KEY);
-			HttpResponse resp14 = http14.execute(host14, getPage14);
-			String jsonString14 = EntityUtils.toString(resp14.getEntity());
-			JSONArray arr14 = new JSONArray(jsonString14);
-
+			//2014, 2015, 2016 Detroit data 
+			JSONArray arr14 = detroitAPIBuilder("/resource/hhs5-b2n3.json?$$app_token=");
+			JSONArray arr15 = detroitAPIBuilder("/resource/sr29-szd3.json?$$app_token=");
+			JSONArray arr16 = detroitAPIBuilder("/resource/g2xp-q8wj.json?$$app_token=");
+			
+			//API score calculator -> 2014 **correct
 			for (int i = 0; i < arr14.length(); i++) {
 				String gLat = arr14.getJSONObject(i).get("y").toString();
 				String gLng = arr14.getJSONObject(i).get("x").toString();
@@ -84,49 +95,52 @@ public class HomeController {
 				distance = distance * 3.28084;
 				if (distance < 2000) {
 					score = score + 55;
-				}
-				
+				}	
 			}
 
-//			HttpClient http15 = HttpClientBuilder.create().build();
-//			HttpHost host15 = new HttpHost("data.detroitmi.gov", 443, "https");
-//			HttpGet getPage15 = new HttpGet("/resource/sr29-szd3.json?$$app_token=" + APICredentials.DATADETROIT_KEY);
-//			HttpResponse resp15 = http15.execute(host15, getPage15);
-//			String jsonString15 = EntityUtils.toString(resp15.getEntity());
-//			JSONArray arr15 = new JSONArray(jsonString15);
-//
-//			for (int i = 0; i < arr15.length(); i++) {
-//				double ghostLat = (double) arr15.getJSONObject(i).get("y");
-//				double ghostLng = (double) arr15.getJSONObject(i).get("x");
-//				double distance = distance(lat, ghostLat, lng, ghostLng);
-//				distance = distance * 3.28084;
-//				if (distance < 500) {
-//					score = score + 55;
-//				}
-//			}
-//
-//			HttpClient http16 = HttpClientBuilder.create().build();
-//			HttpHost host16 = new HttpHost("data.detroitmi.gov", 443, "https");
-//			HttpGet getPage16 = new HttpGet("/resource/g2xp-q8wj.json?$$app_token=" + APICredentials.DATADETROIT_KEY);
-//			HttpResponse resp16 = http16.execute(host16, getPage16);
-//			String jsonString16 = EntityUtils.toString(resp16.getEntity());
-//			JSONArray arr16 = new JSONArray(jsonString16);
-//
-//			for (int i = 0; i < arr16.length(); i++) {
-//				double ghostLat = (double) arr16.getJSONObject(i).getJSONObject("location").getJSONArray("coordinates").get(0);
-//				double ghostLng = (double) arr16.getJSONObject(i).getJSONObject("location").getJSONArray("coordinates").get(1);
-//				double distance = distance(lat, ghostLat, lng, ghostLng);
-//				distance = distance * 3.28084;
-//				if (distance < 500) {
-//					score = score + 55;
-//				}
-//			}
+	
+			for (int i = 0; i < arr15.length(); i++) {
+				String gLat = arr15.getJSONObject(i).get("y").toString();
+				String gLng = arr15.getJSONObject(i).get("x").toString();
+				double ghostLat = Double.parseDouble(gLat);
+				double ghostLng = Double.parseDouble(gLng);
+				double distance = distance(lat, ghostLat, lng, ghostLng);
+				distance = distance * 3.28084;
+				if (distance < 2000) {
+					score = score + 55;
+				}	
+			}
+
+
+			
+			
+
+			for (int i = 0; i < arr16.length(); i++) {
+				double ghostLat = (double) arr16.getJSONObject(i).getJSONObject("location").getJSONArray("coordinates").get(0);
+				double ghostLng = (double) arr16.getJSONObject(i).getJSONObject("location").getJSONArray("coordinates").get(1);
+				double distance = distance(lat, ghostLat, lng, ghostLng);
+				distance = distance * 3.28084;
+				if (distance < 500) {
+					score = score + 55;
+				}
+			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return new ModelAndView("welcome", "message", score);
+	}
+
+	//method to take in each api page url and return the parent JSONArray
+	private JSONArray detroitAPIBuilder(String page) throws IOException, ClientProtocolException {
+		HttpClient http = HttpClientBuilder.create().build();
+		HttpHost host = new HttpHost("data.detroitmi.gov", 443, "https");
+		HttpGet getPage = new HttpGet(page + APICredentials.DATADETROIT_KEY);
+		HttpResponse resp = http.execute(host, getPage);
+		String jsonString = EntityUtils.toString(resp.getEntity());
+		JSONArray arr = new JSONArray(jsonString);
+		return arr;
 	}
 
 	public static double distance(double lat1, double lat2, double lon1, double lon2) {
