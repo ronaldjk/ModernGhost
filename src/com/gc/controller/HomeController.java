@@ -67,5 +67,10 @@ public class HomeController {
 		
 		return new ModelAndView("welcome", "message", score);
 	}
+	
+	@RequestMapping("/results")
+	public ModelAndView ghostMap() {
+		return new ModelAndView("results", "", "");
+	}
 
 }
