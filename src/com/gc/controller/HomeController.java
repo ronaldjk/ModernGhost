@@ -15,6 +15,7 @@ import com.gc.calc.Build;
 import com.gc.calc.Calculations;
 import com.gc.dao.AddressDAOImp;
 import com.gc.model.Address;
+import com.gc.util.APICredentials;
 
 /**
  * Project Name: Modern Ghost
@@ -72,8 +73,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/map")
-	public ModelAndView ghostMap() {
-		return new ModelAndView("results", "", "");
+	public ModelAndView ghostMap(Model model) {
+		AddressDAOImp dao = new AddressDAOImp();
+		ArrayList<Address> ghostList = dao.getAllAddress();
+		model.addAttribute("ghost", ghostList);
+		String k = APICredentials.GOOGLE_KEY;
+		return new ModelAndView("map", "k", k);
 	}
 	@RequestMapping("/data")
 	public ModelAndView ghostData(Model model) {
