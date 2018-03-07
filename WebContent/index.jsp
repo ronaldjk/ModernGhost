@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Spring MVC</title>
+<title>Modern Ghost</title>
 <style>
 body {
     background-color: black;
@@ -22,6 +22,7 @@ body {
 	<input type = "submit" value = "submit">
 		
 	</form>
+	<p><a href="map">Click here</a><font color="white"> to view a map of known haunted locations</font></p>
 	</div>
 </body>
 </html>

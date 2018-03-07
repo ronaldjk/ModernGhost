@@ -25,7 +25,7 @@ import com.gc.model.Address;
 @Controller
 public class HomeController {
 
-	@RequestMapping("welcome")
+	@RequestMapping("/result")
 	public ModelAndView findGhost(@RequestParam("address") String address) {
 		// returned scored
 		int score = 0;
@@ -68,9 +68,13 @@ public class HomeController {
 		return new ModelAndView("welcome", "message", score);
 	}
 	
-	@RequestMapping("/results")
+	@RequestMapping("/map")
 	public ModelAndView ghostMap() {
 		return new ModelAndView("results", "", "");
+	}
+	@RequestMapping("/data")
+	public ModelAndView ghostData() {
+		return new ModelAndView("data", "", "");
 	}
 
 }
