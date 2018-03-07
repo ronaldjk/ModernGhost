@@ -70,12 +70,11 @@ public class HomeController {
 		}
 		
 
-		if(score >= 85) {
+		if(score >= 85 && (Calculations.getKnownLoc() != 1)) {
 			Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
 			dao.addAddress(toAdd);
 		}
-		
-
+	
 		return new ModelAndView("result", "message", score);
 	}
 	

@@ -7,7 +7,12 @@ import org.json.JSONArray;
 import com.gc.model.Address;
 
 public class Calculations {
+	private static int knownLoc = 0;
 	
+	public static int getKnownLoc() {
+		return knownLoc;
+	}
+
 	public static double distance(double lat1, double lat2, double lon1, double lon2) {
 
 		final int R = 6371; // Radius of the earth
@@ -69,6 +74,7 @@ public class Calculations {
 				hitDistance.add((int) distance);
 				hitPlace.add(ghostList.get(i).getPlace());
 				score += 85;
+				knownLoc = 1;
 			} else if (distance <= 50) {
 				hitDistance.add((int) distance);
 				hitPlace.add(ghostList.get(i).getPlace());
