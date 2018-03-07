@@ -71,12 +71,11 @@ public class HomeController {
 		}
 		
 
-		if(score >= 85) {
+		if(score >= 85 && (Calculations.getKnownLoc() != 1)) {
 			Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
 			dao.addAddress(toAdd);
 		}
-		
-
+	
 		return new ModelAndView("result", "message", score);
 	}
 	
@@ -99,13 +98,21 @@ public class HomeController {
 		}
 		model.addAttribute("score", score);
 		
+		
+		
 		for(int i=0; i < hitDbDist.size(); i++) {
 			listOfHits += ("<li>" + "This location is " + hitDbDist.get(i) + " feet away from the known haunted location: " + hitDbPlace.get(i) + "</li>");
 		}
 		
 		for(int i=0; i < hitApiDist.size(); i++) {
 			listOfHits += ("<li>" + "This location is " + hitApiDist.get(i) + " feet away from a death." + "</li>");
+		
 		}
+		
+		score = 0;
+		hitDbDist.clear();
+		hitDbPlace.clear();
+		hitApiDist.clear();
 		
 		return new ModelAndView("data", "data", listOfHits);
 	}
