@@ -106,7 +106,7 @@ public class Address {
 		return formatted;
 
 	}
-
+	//access the JSON code to navigate through and get the correct lat and lng for the places
 	// this method places the formatted string in the the google geocode API and returns the latitude as a double
 	public static Double getLat(String formattedInput) {
 		Double lat = 0.00;
