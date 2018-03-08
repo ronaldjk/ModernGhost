@@ -87,7 +87,8 @@ public class Address {
 	public void setX(String x) {
 		this.x = x;
 	}
-
+	
+	// method that places addition symbols between words and adds city and state to be used in a url
 	public static String formatAddress(String userInput) {
 		String formatted = "";
 		userInput = userInput.trim();
@@ -106,6 +107,7 @@ public class Address {
 
 	}
 
+	// this method places the formatted string in the the google geocode API and returns the latitude as a double
 	public static Double getLat(String formattedInput) {
 		Double lat = 0.00;
 		try {
@@ -129,6 +131,7 @@ public class Address {
 		return lat;
 	}
 
+	// this method places the formatted string in the the google geocode API and returns the longitude as a double
 	public static Double getLng(String formattedInput) {
 		Double lng = 0.00;
 		try {

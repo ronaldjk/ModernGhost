@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import com.gc.util.APICredentials;
 
 public class Build {
+	// this method connects to the APIs and returns a JSON Array of the data
 	public static JSONArray detroitAPIBuilder(String page) throws IOException, ClientProtocolException {
 		HttpClient http = HttpClientBuilder.create().build();
 		HttpHost host = new HttpHost("data.detroitmi.gov", 443, "https");

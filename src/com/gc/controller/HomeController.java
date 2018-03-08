@@ -27,6 +27,8 @@ import com.google.gson.Gson;
 
 @Controller
 public class HomeController {
+	// global variables to be used in all request mappings
+	// arraylists that hold distance results and name
 	int score = 0;
 	ArrayList<Integer> hitDbDist = new ArrayList<Integer>();
 	ArrayList<String> hitDbPlace = new ArrayList<String>();
@@ -37,7 +39,6 @@ public class HomeController {
 
 		// user input & convert to latitude and longitude
 		String test = Address.formatAddress(address);
-		System.out.println(test);
 		Double lat = Address.getLat(test);
 		Double lng = Address.getLng(test);
 
@@ -55,7 +56,7 @@ public class HomeController {
 			JSONArray arr15 = Build.detroitAPIBuilder("/resource/sr29-szd3.json?$$app_token=");
 			JSONArray arr16 = Build.detroitAPIBuilder("/resource/g2xp-q8wj.json?$$app_token=");
 
-			// API score calculator -> 2014 **correct
+			// API score calculator
 			score = Calculations.calcApiScore(score, lat, lng, arr14, 2014, hitApiDist);
 			score = Calculations.calcApiScore(score, lat, lng, arr15, 2015, hitApiDist);
 			score = Calculations.calcApiScore(score, lat, lng, arr16, 2016, hitApiDist);
@@ -65,12 +66,12 @@ public class HomeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		// prevents scores from being higher than 100%
 		if(score > 100) {
 			score = 100;
 		}
 		
-
+		// adds high scoring houses to databases
 		if(score >= 85 && (Calculations.getKnownLoc() != 1)) {
 			Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
 			dao.addAddress(toAdd);

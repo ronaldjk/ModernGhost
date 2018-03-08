@@ -64,6 +64,7 @@ public class Calculations {
 		return score;
 	}
 	
+	// this method calculates score based on distance to known haunted locations
 	public static int calcDbScore(int score, Double lat, Double lng, ArrayList<Address> ghostList, ArrayList<String> hitPlace, ArrayList<Integer> hitDistance) {
 		for (int i = 0; i < ghostList.size(); ++i) {
 			double ghostLat = Double.parseDouble(ghostList.get(i).getY());

@@ -18,7 +18,7 @@ body {
 	<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">
 	</p>
 	<form action = "result">
-	<font color="white">Enter Address: </font><input type = "text" name = "address">
+	<font color="white">Enter Address: </font><input type = "text" name = "address" required>
 	<input type = "submit" value = "submit">
 		
 	</form>

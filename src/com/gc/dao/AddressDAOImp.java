@@ -12,6 +12,7 @@ import com.gc.util.HibernateUtil;
 
 public class AddressDAOImp implements AddressDAO {
 
+	// this method creates an array list of all rows in the database
 	@Override
 	public ArrayList<Address> getAllAddress() {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -25,6 +26,7 @@ public class AddressDAOImp implements AddressDAO {
 		return ghostList;
 	}
 
+	// this method creates an address object of a row from the table in the database
 	@Override
 	public Address getAddress() {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -37,13 +39,13 @@ public class AddressDAOImp implements AddressDAO {
 		return ghost;
 	}
 
+	// this method adds/creates a new row in the table
 	@Override
 	public void addAddress(Address address) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		Address ghost = address;
-		session.save(ghost);
+		session.save(address);
 		tx.commit();
 		session.close();
 
