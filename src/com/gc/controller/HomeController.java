@@ -36,6 +36,11 @@ public class HomeController {
 
 	@RequestMapping("/result")
 	public ModelAndView findGhost(@RequestParam("address") String address) {
+		// clears out score and arrayLists for all new searches
+		score = 0;
+		hitDbDist.clear();
+		hitDbPlace.clear();
+		hitApiDist.clear();
 
 		// user input & convert to latitude and longitude
 		String test = Address.formatAddress(address);
@@ -44,8 +49,8 @@ public class HomeController {
 
 		// Create an ArrayList of Address objects from database
 		AddressDAOImp dao = new AddressDAOImp();
-		ArrayList<Address> ghostList = dao.getAllAddress();	
-		
+		ArrayList<Address> ghostList = dao.getAllAddress();
+
 		// Loop through the database ArrayList & calculate score
 		// haunted locations
 		score = Calculations.calcDbScore(score, lat, lng, ghostList, hitDbPlace, hitDbDist);
@@ -67,19 +72,20 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		// prevents scores from being higher than 100%
-		if(score > 100) {
+		if (score > 100) {
 			score = 100;
 		}
-		
+
 		// adds high scoring houses to databases
-		if(score >= 85 && (Calculations.getKnownLoc() != 1)) {
+		if (score >= 85 && (Calculations.getKnownLoc() != 1)) {
 			Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
 			dao.addAddress(toAdd);
 		}
-	
+
 		return new ModelAndView("result", "message", score);
 	}
-	
+
+	// converts database to JSON and sends to jsp page
 	@RequestMapping("/map")
 	public ModelAndView ghostMap(Model model) {
 		AddressDAOImp dao = new AddressDAOImp();
@@ -91,30 +97,21 @@ public class HomeController {
 		return new ModelAndView("map", "k", k);
 
 	}
+
 	@RequestMapping("/data")
 	public ModelAndView ghostData(Model model) {
 		String listOfHits = "";
-		if(score > 100) {
-			score = 100;
-		}
 		model.addAttribute("score", score);
-		
-		
-		
-		for(int i=0; i < hitDbDist.size(); i++) {
-			listOfHits += ("<li>" + "This location is " + hitDbDist.get(i) + " feet away from the known haunted location: " + hitDbPlace.get(i) + "</li>");
+		for (int i = 0; i < hitDbDist.size(); i++) {
+			listOfHits += ("<li>" + "This location is " + hitDbDist.get(i)
+					+ " feet away from the known haunted location: " + hitDbPlace.get(i) + "</li>");
 		}
-		
-		for(int i=0; i < hitApiDist.size(); i++) {
+
+		for (int i = 0; i < hitApiDist.size(); i++) {
 			listOfHits += ("<li>" + "This location is " + hitApiDist.get(i) + " feet away from a death." + "</li>");
-		
+
 		}
-		
-		score = 0;
-		hitDbDist.clear();
-		hitDbPlace.clear();
-		hitApiDist.clear();
-		
+
 		return new ModelAndView("data", "data", listOfHits);
 	}
 

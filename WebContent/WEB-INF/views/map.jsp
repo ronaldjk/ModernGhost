@@ -21,11 +21,13 @@ html, body {
 </head>
 <body>
 	<script>
+	// creating a variable of the JSONArray
 	var ghostList = ${ghost};
 	</script>
 	<div id="map"></div>
 	<script>
 	var map;
+		// adds markers to map according to lat, long, and shows address when clicked
 		function addMarker(lat, lon, address) {
 			marker = new google.maps.Marker({
 					position: new google.maps.LatLng(lat, lon),
@@ -42,7 +44,7 @@ html, body {
 				
 				
 		}
-
+		// initializing the map
 		function initMap() {
 
 
@@ -53,9 +55,10 @@ html, body {
 				},
 				zoom: 12
 			});
+			// calling the parseJSON function to iterated through the array
 			parseJSON();
 		}
-		
+		// function that iterates through JSON array and calls the addMarker function
 		function parseJSON() {
 			for (i in ghostList) {
 				var y = ghostList[i].y;
@@ -65,6 +68,7 @@ html, body {
 			}
 		}
 	</script>
+<!-- 	initializing the api with the key -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=${k}&callback=initMap" async defer></script>
 </body>
 </html>
