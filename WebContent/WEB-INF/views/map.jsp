@@ -26,17 +26,21 @@ html, body {
 	<div id="map"></div>
 	<script>
 	var map;
-		function addMarker(lat, lon) {
+		function addMarker(lat, lon, address) {
 			marker = new google.maps.Marker({
 					position: new google.maps.LatLng(lat, lon),
 					map: map
 				});
+			var infowindow = new google.maps.InfoWindow({});
+			
 				google.maps.event.addListener(marker, 'click', (function (marker) {
 					return function () {
-						infowindow.setContent("hi");
+						infowindow.setContent(address);
 						infowindow.open(map, marker);
 					}
 				})(marker));
+				
+				
 		}
 
 		function initMap() {
@@ -56,7 +60,8 @@ html, body {
 			for (i in ghostList) {
 				var y = ghostList[i].y;
 				var x = ghostList[i].x;
-				addMarker(y, x);
+				var add = ghostList[i].address;
+				addMarker(y, x, add);
 			}
 		}
 	</script>
