@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 <style>
 body {
     background-color: black;
+    color: white;
 }
 </style>
 </head>
@@ -20,6 +22,15 @@ body {
 	<form action = "result">
 	<font color="white">Enter Address: </font><input type = "text" name = "address" required>
 	<input type = "submit" value = "submit">
+	
+	<!-- set valid entry, will be true for page initialization, will be false if invalid address -->
+	<c:set var="validentry" value="${fail}" />
+
+	<!-- when false, home controller returns index page and displays fail message -->
+	<c:if test="${validentry == false}">
+		<p>${failmsg}
+		</p>
+	</c:if>
 		
 	</form>
 	<p><a href="map">Click here</a><font color="white"> to view a map of known haunted locations</font></p>

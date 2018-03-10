@@ -34,55 +34,75 @@ public class HomeController {
 	ArrayList<String> hitDbPlace = new ArrayList<String>();
 	ArrayList<Integer> hitApiDist = new ArrayList<Integer>();
 
+	//index page will return true (skipping fail message)
+	@RequestMapping("/")
+	public String index(Model model) {
+		boolean validEntry = true;
+		model.addAttribute("fail", validEntry);
+
+		return "index";
+	}
+	
 	@RequestMapping("/result")
-	public ModelAndView findGhost(@RequestParam("address") String address) {
+	public String findGhost(@RequestParam("address") String address, Model model) {
 		// clears out score and arrayLists for all new searches
 		score = 0;
 		hitDbDist.clear();
 		hitDbPlace.clear();
 		hitApiDist.clear();
+		boolean validEntry = true;
 
 		// user input & convert to latitude and longitude
-		String test = Address.formatAddress(address);
-		Double lat = Address.getLat(test);
-		Double lng = Address.getLng(test);
-
-		// Create an ArrayList of Address objects from database
-		AddressDAOImp dao = new AddressDAOImp();
-		ArrayList<Address> ghostList = dao.getAllAddress();
-
-		// Loop through the database ArrayList & calculate score
-		// haunted locations
-		score = Calculations.calcDbScore(score, lat, lng, ghostList, hitDbPlace, hitDbDist);
-
-		try {
-			// 2014, 2015, 2016 Detroit data
-			JSONArray arr14 = Build.detroitAPIBuilder("/resource/hhs5-b2n3.json?$$app_token=");
-			JSONArray arr15 = Build.detroitAPIBuilder("/resource/sr29-szd3.json?$$app_token=");
-			JSONArray arr16 = Build.detroitAPIBuilder("/resource/g2xp-q8wj.json?$$app_token=");
-
-			// API score calculator
-			score = Calculations.calcApiScore(score, lat, lng, arr14, 2014, hitApiDist);
-			score = Calculations.calcApiScore(score, lat, lng, arr15, 2015, hitApiDist);
-			score = Calculations.calcApiScore(score, lat, lng, arr16, 2016, hitApiDist);
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		String userEntry = Address.formatAddress(address);
+		
+		//validates address
+		if(Address.isValidAddress(userEntry)) {
+			Double lat = Address.getLat(userEntry);
+			Double lng = Address.getLng(userEntry);
+	
+			// Create an ArrayList of Address objects from database
+			AddressDAOImp dao = new AddressDAOImp();
+			ArrayList<Address> ghostList = dao.getAllAddress();
+	
+			// Loop through the database ArrayList & calculate score
+			// haunted locations
+			score = Calculations.calcDbScore(score, lat, lng, ghostList, hitDbPlace, hitDbDist);
+	
+			try {
+				// 2014, 2015, 2016 Detroit data
+				JSONArray arr14 = Build.detroitAPIBuilder("/resource/hhs5-b2n3.json?$$app_token=");
+				JSONArray arr15 = Build.detroitAPIBuilder("/resource/sr29-szd3.json?$$app_token=");
+				JSONArray arr16 = Build.detroitAPIBuilder("/resource/g2xp-q8wj.json?$$app_token=");
+	
+				// API score calculator
+				score = Calculations.calcApiScore(score, lat, lng, arr14, 2014, hitApiDist);
+				score = Calculations.calcApiScore(score, lat, lng, arr15, 2015, hitApiDist);
+				score = Calculations.calcApiScore(score, lat, lng, arr16, 2016, hitApiDist);
+	
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// prevents scores from being higher than 100%
+			if (score > 100) {
+				score = 100;
+			}
+	
+			// adds high scoring houses to databases
+			if (score >= 85 && (Calculations.getKnownLoc() != 1)) {
+				Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
+				dao.addAddress(toAdd);
+			}
+			model.addAttribute("message", score);
+			return "result";
 		}
-		// prevents scores from being higher than 100%
-		if (score > 100) {
-			score = 100;
-		}
-
-		// adds high scoring houses to databases
-		if (score >= 85 && (Calculations.getKnownLoc() != 1)) {
-			Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
-			dao.addAddress(toAdd);
-		}
-
-		return new ModelAndView("result", "message", score);
+		//if user address isn't valid
+		validEntry = false;
+		model.addAttribute("fail", validEntry);
+		model.addAttribute("failmsg", "Your address wasn't valid, please try again!");
+		return "index";
+		
 	}
 
 	// converts database to JSON and sends to jsp page

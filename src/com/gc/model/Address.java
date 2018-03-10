@@ -154,5 +154,25 @@ public class Address {
 
 		return lng;
 	}
+	
+	public static boolean isValidAddress(String formattedInput) {
+		try {
+			HttpClient http = HttpClientBuilder.create().build();
+			HttpHost host = new HttpHost("maps.googleapis.com", 443, "https");
+			HttpGet getPage = new HttpGet(
+					"/maps/api/geocode/json?address=" + formattedInput + "&key=" + APICredentials.GOOGLE_KEY);
+			HttpResponse resp = http.execute(host, getPage);
+			String jsonString = EntityUtils.toString(resp.getEntity());
+			JSONObject json = new JSONObject(jsonString);
+			if (json.getString("status").equals("OK")) {
+				return true;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 
 }
