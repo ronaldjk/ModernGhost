@@ -54,7 +54,9 @@ public class HomeController {
 	
 	@RequestMapping("/admin")
 	public ModelAndView admin(@RequestParam("username") String userName, @RequestParam("password") String password) {
-		Admin user = new Admin(userName, password);
+		Admin user = new Admin();
+		user.setUserName(userName);
+		user.setPassword(password);
 		AdminDAOImp dao = new AdminDAOImp();
 		ArrayList<Admin> adminList = dao.getAllAdmin();
 		for (int i = 0; i < adminList.size(); ++i) {
