@@ -43,6 +43,12 @@ public class HomeController {
 		return "index";
 	}
 	
+	@RequestMapping("/adminlog")
+	public String adminLog() {
+		return "adminlog";
+	}
+	
+	
 	@RequestMapping("/result")
 	public String findGhost(@RequestParam("address") String address, Model model) {
 		// clears out score and arrayLists for all new searches
