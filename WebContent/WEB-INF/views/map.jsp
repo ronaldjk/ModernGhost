@@ -40,6 +40,8 @@ html, body {
 						infowindow.setContent(address);
 						infowindow.open(map, marker);
 					}
+				
+
 				})(marker));
 				
 				
