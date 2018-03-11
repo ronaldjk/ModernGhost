@@ -1,6 +1,7 @@
 package com.gc.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.http.client.ClientProtocolException;
@@ -14,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gc.calc.Build;
 import com.gc.calc.Calculations;
 import com.gc.dao.AddressDAOImp;
+import com.gc.dao.AdminDAOImp;
 import com.gc.model.Address;
+import com.gc.model.Admin;
 import com.gc.util.APICredentials;
 import com.google.gson.Gson;
 
@@ -33,6 +36,7 @@ public class HomeController {
 	ArrayList<Integer> hitDbDist = new ArrayList<Integer>();
 	ArrayList<String> hitDbPlace = new ArrayList<String>();
 	ArrayList<Integer> hitApiDist = new ArrayList<Integer>();
+	String globalAddress = "";
 
 	//index page will return true (skipping fail message)
 	@RequestMapping("/")
@@ -43,6 +47,26 @@ public class HomeController {
 		return "index";
 	}
 	
+	@RequestMapping("/adminlog")
+	public String adminLog() {
+		return "adminlog";
+	}
+	
+	@RequestMapping("/admin")
+	public ModelAndView admin(@RequestParam("username") String userName, @RequestParam("password") String password) {
+		Admin user = new Admin(userName, password);
+		AdminDAOImp dao = new AdminDAOImp();
+		ArrayList<Admin> adminList = dao.getAllAdmin();
+		for (int i = 0; i < adminList.size(); ++i) {
+			if (user.getUserName() == adminList.get(i).getUserName() && user.getPassword() == adminList.get(i).getPassword()) {
+				return new ModelAndView("admin", "", "");
+			}
+		}
+		return new ModelAndView("adminlog", "", "");
+		
+	}
+	
+	
 	@RequestMapping("/result")
 	public String findGhost(@RequestParam("address") String address, Model model) {
 		// clears out score and arrayLists for all new searches
@@ -51,6 +75,9 @@ public class HomeController {
 		hitDbPlace.clear();
 		hitApiDist.clear();
 		boolean validEntry = true;
+		boolean highScore = false;
+		boolean addedSuccess = false;
+		globalAddress = address;
 
 		// user input & convert to latitude and longitude
 		String userEntry = Address.formatAddress(address);
@@ -92,8 +119,12 @@ public class HomeController {
 			// adds high scoring houses to databases
 			if (score >= 85 && (Calculations.getKnownLoc() != 1)) {
 				Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
+				highScore = true;
 				dao.addAddress(toAdd);
+				System.out.println("ron sucks");
 			}
+			model.addAttribute("added", addedSuccess);
+			model.addAttribute("highScore", highScore);
 			model.addAttribute("message", score);
 			return "result";
 		}
@@ -133,6 +164,16 @@ public class HomeController {
 		}
 
 		return new ModelAndView("data", "data", listOfHits);
+	}
+	@RequestMapping("/update")
+	public String addGhost(Model model, @RequestParam("name") String name) throws ClassNotFoundException, SQLException {
+		boolean highScore = false;
+		boolean addedSuccess = true;
+		model.addAttribute("added", addedSuccess);
+		model.addAttribute("highScore", highScore);
+		model.addAttribute("message", score);
+		AddressDAOImp.addPlace(name, globalAddress);
+		return "result";
 	}
 
 }

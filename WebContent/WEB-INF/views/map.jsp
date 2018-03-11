@@ -45,6 +45,8 @@ html, body {
 						infowindow.setContent(address);
 						infowindow.open(map, marker);
 					}
+				
+
 				})(marker));
 				
 				// This is what you changed in order to make custom icons

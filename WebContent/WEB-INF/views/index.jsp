@@ -13,6 +13,9 @@ body {
 </style>
 </head>
 <body>
+<div style="text-align:right">
+<a href="adminlog">Admin</a>
+</div>
 	<br>
 	<div style="text-align:center">
 	<p>
