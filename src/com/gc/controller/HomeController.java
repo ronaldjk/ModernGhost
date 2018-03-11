@@ -51,6 +51,8 @@ public class HomeController {
 		hitDbPlace.clear();
 		hitApiDist.clear();
 		boolean validEntry = true;
+		boolean highScore = false;
+		boolean addedSuccess = false;
 
 		// user input & convert to latitude and longitude
 		String userEntry = Address.formatAddress(address);
@@ -92,8 +94,12 @@ public class HomeController {
 			// adds high scoring houses to databases
 			if (score >= 85 && (Calculations.getKnownLoc() != 1)) {
 				Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
-				dao.addAddress(toAdd);
+				highScore = true;
+				//dao.addAddress(toAdd);
+				System.out.println("ron sucks");
 			}
+			model.addAttribute("added", addedSuccess);
+			model.addAttribute("highScore", highScore);
 			model.addAttribute("message", score);
 			return "result";
 		}
@@ -133,6 +139,15 @@ public class HomeController {
 		}
 
 		return new ModelAndView("data", "data", listOfHits);
+	}
+	@RequestMapping("/update")
+	public String addGhost(Model model) {
+		boolean highScore = false;
+		boolean addedSuccess = true;
+		model.addAttribute("added", addedSuccess);
+		model.addAttribute("highScore", highScore);
+		model.addAttribute("message", score);
+		return "result";
 	}
 
 }
