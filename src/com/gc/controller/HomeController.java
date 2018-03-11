@@ -1,6 +1,7 @@
 package com.gc.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.http.client.ClientProtocolException;
@@ -35,6 +36,7 @@ public class HomeController {
 	ArrayList<Integer> hitDbDist = new ArrayList<Integer>();
 	ArrayList<String> hitDbPlace = new ArrayList<String>();
 	ArrayList<Integer> hitApiDist = new ArrayList<Integer>();
+	String globalAddress = "";
 
 	//index page will return true (skipping fail message)
 	@RequestMapping("/")
@@ -75,6 +77,7 @@ public class HomeController {
 		boolean validEntry = true;
 		boolean highScore = false;
 		boolean addedSuccess = false;
+		globalAddress = address;
 
 		// user input & convert to latitude and longitude
 		String userEntry = Address.formatAddress(address);
@@ -117,7 +120,7 @@ public class HomeController {
 			if (score >= 85 && (Calculations.getKnownLoc() != 1)) {
 				Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
 				highScore = true;
-				//dao.addAddress(toAdd);
+				dao.addAddress(toAdd);
 				System.out.println("ron sucks");
 			}
 			model.addAttribute("added", addedSuccess);
@@ -163,12 +166,13 @@ public class HomeController {
 		return new ModelAndView("data", "data", listOfHits);
 	}
 	@RequestMapping("/update")
-	public String addGhost(Model model) {
+	public String addGhost(Model model, @RequestParam("name") String name) throws ClassNotFoundException, SQLException {
 		boolean highScore = false;
 		boolean addedSuccess = true;
 		model.addAttribute("added", addedSuccess);
 		model.addAttribute("highScore", highScore);
 		model.addAttribute("message", score);
+		AddressDAOImp.addPlace(name, globalAddress);
 		return "result";
 	}
 
