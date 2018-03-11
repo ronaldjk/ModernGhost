@@ -29,10 +29,15 @@ html, body {
 	var map;
 		// adds markers to map according to lat, long, and shows address when clicked
 		function addMarker(lat, lon, address) {
-			marker = new google.maps.Marker({
-					position: new google.maps.LatLng(lat, lon),
-					map: map
-				});
+			
+				var iconBase = 'https://upload.wikimedia.org/wikipedia/commons/a/af/';
+				  var marker = new google.maps.Marker({
+				    position: new google.maps.LatLng(lat, lon),
+				    map: map,
+				    icon: iconBase + 'Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Ghost_%E2%80%93_Events_%E2%80%93_Dark.png'
+
+				  });
+			
 			var infowindow = new google.maps.InfoWindow({});
 			
 				google.maps.event.addListener(marker, 'click', (function (marker) {
@@ -42,6 +47,9 @@ html, body {
 					}
 				})(marker));
 				
+				// This is what you changed in order to make custom icons
+				
+				// This is where you change ends.
 				
 		}
 		// initializing the map
