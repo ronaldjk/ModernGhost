@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gc.calc.Build;
 import com.gc.calc.Calculations;
 import com.gc.dao.AddressDAOImp;
+import com.gc.dao.AdminDAOImp;
 import com.gc.model.Address;
+import com.gc.model.Admin;
 import com.gc.util.APICredentials;
 import com.google.gson.Gson;
 
@@ -46,6 +48,20 @@ public class HomeController {
 	@RequestMapping("/adminlog")
 	public String adminLog() {
 		return "adminlog";
+	}
+	
+	@RequestMapping("/admin")
+	public ModelAndView admin(@RequestParam("username") String userName, @RequestParam("password") String password) {
+		Admin user = new Admin(userName, password);
+		AdminDAOImp dao = new AdminDAOImp();
+		ArrayList<Admin> adminList = dao.getAllAdmin();
+		for (int i = 0; i < adminList.size(); ++i) {
+			if (user.getUserName() == adminList.get(i).getUserName() && user.getPassword() == adminList.get(i).getPassword()) {
+				return new ModelAndView("admin", "", "");
+			}
+		}
+		return new ModelAndView("adminlog", "", "");
+		
 	}
 	
 	

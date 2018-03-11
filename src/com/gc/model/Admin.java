@@ -1,5 +1,11 @@
 package com.gc.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Address")
 public class Admin {
 
 	private String userName;
@@ -13,7 +19,7 @@ public class Admin {
 		this.userName = userName;
 		this.password = password;
 	}
-
+	@Column(name = "userName")
 	public String getUserName() {
 		return userName;
 	}
@@ -21,7 +27,7 @@ public class Admin {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	@Column(name = "password")
 	public String getPassword() {
 		return password;
 	}
