@@ -35,7 +35,7 @@ body {
 		<p>${failmsg}
 		</p>
 	</c:if>
-	
+	<p><a href="submit">Click here</a><font color="white"> to submit a haunted location</font></p>
 	<p><a href="map">Click here</a><font color="white"> to view a map of known haunted locations</font></p>
 	</div>
 </body>
