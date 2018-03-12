@@ -18,6 +18,7 @@ body {
 	<img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">
 	<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">
 	</p>
+	<p><font color="red">${fail}</font></p>
 	<form action = "admin" method="POST">
 		<font color="white">Enter Username: </font><input type = "text" name = "username" required><br>
 		<font color="white">Enter Password: </font><input type = "password" name = "password" required><br>

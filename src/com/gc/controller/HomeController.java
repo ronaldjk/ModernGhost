@@ -61,7 +61,7 @@ public class HomeController {
 		ArrayList<Admin> adminList = dao.getAllAdmin();
 		for (int i = 0; i < adminList.size(); ++i) {
 			if (user.getUserName() != adminList.get(i).getUserName() || user.getPassword() != adminList.get(i).getPassword()) {
-				return new ModelAndView("adminlog", "", "");
+				return new ModelAndView("adminlog", "fail", "Incorrect Username and/or Password");
 			}
 		} 
 		return new ModelAndView("admin", "", "");
