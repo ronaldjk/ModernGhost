@@ -39,7 +39,7 @@ html, body {
 				  });
 			
 				google.maps.event.addListener(marker, 'click', (function (marker) {
-					var contentString = '<p><strong>'+place+'</strong></p>' +'<p>'+address+'</p>';
+					var contentString = '<p style="text-align:center"><strong>'+place+'</strong><br>'+address+'</p>';
 					
 					var infowindow = new google.maps.InfoWindow({
 						content: contentString
