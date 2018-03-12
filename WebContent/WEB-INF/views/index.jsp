@@ -18,6 +18,7 @@ body {
 </div>
 	<br>
 	<div style="text-align:center">
+	<p><font color = "red">${submit }</font><p>
 	<p>
 	<img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">
 	<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">

@@ -16,8 +16,10 @@ import com.gc.calc.Build;
 import com.gc.calc.Calculations;
 import com.gc.dao.AddressDAOImp;
 import com.gc.dao.AdminDAOImp;
+import com.gc.dao.UserLocDAOImp;
 import com.gc.model.Address;
 import com.gc.model.Admin;
+import com.gc.model.UserLoc;
 import com.gc.util.APICredentials;
 import com.google.gson.Gson;
 
@@ -73,7 +75,21 @@ public class HomeController {
 	public String submitLoc() {
 		return "submit";
 	}
-	
+	@RequestMapping("/subghost")
+	public ModelAndView submitGhost(@RequestParam("place") String place, @RequestParam("address") String address, @RequestParam("description") String description) {
+		UserLoc userGhost = new UserLoc();
+		userGhost.setPlace(place);
+		userGhost.setAddress(address);
+		userGhost.setDescription(description);
+		String userEntry = Address.formatAddress(address);
+		Double lat = Address.getLat(userEntry);
+		Double lng = Address.getLng(userEntry);
+		userGhost.setY(lat);
+		userGhost.setX(lng);
+		UserLocDAOImp dao = new UserLocDAOImp();
+		dao.addUserLoc(userGhost);
+		return new ModelAndView("index", "submit", "Your location was successfully submitted to our Admins");
+	}
 	
 	@RequestMapping("/result")
 	public String findGhost(@RequestParam("address") String address, Model model) {
