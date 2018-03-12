@@ -60,11 +60,12 @@ public class HomeController {
 		AdminDAOImp dao = new AdminDAOImp();
 		ArrayList<Admin> adminList = dao.getAllAdmin();
 		for (int i = 0; i < adminList.size(); ++i) {
-			if (user.getUserName() == adminList.get(i).getUserName() && user.getPassword() == adminList.get(i).getPassword()) {
-				return new ModelAndView("admin", "", "");
+			if (user.getUserName() != adminList.get(i).getUserName() || user.getPassword() != adminList.get(i).getPassword()) {
+				return new ModelAndView("adminlog", "", "");
 			}
-		}
-		return new ModelAndView("adminlog", "", "");
+		} 
+		return new ModelAndView("admin", "", "");
+		
 		
 	}
 	
