@@ -28,8 +28,8 @@ body {
 			<td>${myVar.place}</td>
 			<td>${myVar.address}</td>
 			<td>${myVar.description}</td>
-			<td><a href="add?id=${myVar.id}">Add</a>
-			<td><a href="delete?id=${myVar.id}">Delete</a>
+			<td><a href="add?id=${myVar.place}">Add</a>
+			<td><a href="delete?id=${myVar.place}">Delete</a>
 		
 		</tr>
 		

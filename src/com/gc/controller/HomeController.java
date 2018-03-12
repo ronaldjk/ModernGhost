@@ -70,8 +70,19 @@ public class HomeController {
 			}
 		} 
 		return new ModelAndView("adminlog", "fail", "Incorrect Username and/or Password");
-		
-		
+	}
+	
+	@RequestMapping("/delete")
+	public ModelAndView deleteProduct(@RequestParam("id") String place) {
+		UserLoc ghost = new UserLoc();
+		ghost.setPlace(place);
+		UserLocDAOImp dao = new UserLocDAOImp();
+		dao.deleteUserLoc(ghost);
+
+		ArrayList<UserLoc> userList = dao.getAllUserLoc();
+
+		return new ModelAndView("admin", "userList", userList);
+
 	}
 	
 	@RequestMapping("/submit")
