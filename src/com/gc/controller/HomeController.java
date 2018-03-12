@@ -69,6 +69,11 @@ public class HomeController {
 		
 	}
 	
+	@RequestMapping("/submit")
+	public String submitLoc() {
+		return "submit";
+	}
+	
 	
 	@RequestMapping("/result")
 	public String findGhost(@RequestParam("address") String address, Model model) {
