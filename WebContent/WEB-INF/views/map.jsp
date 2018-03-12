@@ -6,6 +6,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="./resources/style.css">
 <title>Ghost Map</title>
 <style>
 html, body {
@@ -28,7 +29,7 @@ html, body {
 	<script>
 	var map;
 		// adds markers to map according to lat, long, and shows address when clicked
-		function addMarker(lat, lon, address) {
+		function addMarker(lat, lon, place, address) {
 			
 				var iconBase = 'https://upload.wikimedia.org/wikipedia/commons/a/af/';
 				  var marker = new google.maps.Marker({
@@ -38,11 +39,14 @@ html, body {
 
 				  });
 			
-			var infowindow = new google.maps.InfoWindow({});
-			
 				google.maps.event.addListener(marker, 'click', (function (marker) {
+					var contentString = '<p style="text-align:center"><strong>'+place+'</strong><br>'+address+'</p>';
+					
+					var infowindow = new google.maps.InfoWindow({
+						content: contentString
+					});
+					
 					return function () {
-						infowindow.setContent(address);
 						infowindow.open(map, marker);
 					}
 				
@@ -74,7 +78,8 @@ html, body {
 				var y = ghostList[i].y;
 				var x = ghostList[i].x;
 				var add = ghostList[i].address;
-				addMarker(y, x, add);
+				var place = ghostList[i].place;
+				addMarker(y, x, place, add);
 			}
 		}
 	</script>
