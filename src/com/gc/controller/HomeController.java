@@ -36,7 +36,7 @@ public class HomeController {
 	ArrayList<Integer> hitDbDist = new ArrayList<Integer>();
 	ArrayList<String> hitDbPlace = new ArrayList<String>();
 	ArrayList<Integer> hitApiDist = new ArrayList<Integer>();
-	String globalAddress = "";
+	Address toAdd;
 
 	//index page will return true (skipping fail message)
 	@RequestMapping("/")
@@ -80,7 +80,6 @@ public class HomeController {
 		boolean validEntry = true;
 		boolean highScore = false;
 		boolean addedSuccess = false;
-		globalAddress = address;
 
 		// user input & convert to latitude and longitude
 		String userEntry = Address.formatAddress(address);
@@ -121,10 +120,8 @@ public class HomeController {
 	
 			// adds high scoring houses to databases
 			if (score >= 85 && (Calculations.getKnownLoc() != 1)) {
-				Address toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
+				toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
 				highScore = true;
-				dao.addAddress(toAdd);
-				System.out.println("ron sucks");
 			}
 			model.addAttribute("added", addedSuccess);
 			model.addAttribute("highScore", highScore);
@@ -168,14 +165,22 @@ public class HomeController {
 
 		return new ModelAndView("data", "data", listOfHits);
 	}
+	
+	//will add scores of 85% or higher if the user submits a name for the location
 	@RequestMapping("/update")
 	public String addGhost(Model model, @RequestParam("name") String name) throws ClassNotFoundException, SQLException {
+		AddressDAOImp dao = new AddressDAOImp();
+		ArrayList<Address> ghostList = dao.getAllAddress();
 		boolean highScore = false;
 		boolean addedSuccess = true;
+		
+		toAdd.setPlace(name);
+		
 		model.addAttribute("added", addedSuccess);
 		model.addAttribute("highScore", highScore);
 		model.addAttribute("message", score);
-		AddressDAOImp.addPlace(name, globalAddress);
+		
+		dao.addAddress(toAdd);
 		return "result";
 	}
 

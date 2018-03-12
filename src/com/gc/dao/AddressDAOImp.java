@@ -56,23 +56,5 @@ public class AddressDAOImp implements AddressDAO {
 
 	}
 	
-	public static void addPlace(String place, String address) throws ClassNotFoundException, SQLException {
-        
-        String url = "jdbc:mysql://localhost:3306/modernghost";
-        String userName = "root";
-        String password = APICredentials.JDBCCONNECTION;
-
-        Class.forName("com.mysql.jdbc.Driver");
-
-        // Step #3: Create Connection
-        Connection con = DriverManager.getConnection(url, userName, password);
-        String preparedSql = "Update address SET Place = \"" + place + "\" WHERE Address = \"" + address + "\";";
-        
-        
-        PreparedStatement add = con.prepareStatement(preparedSql);
-        add.execute();
-        con.close();
-        
-    }
 
 }
