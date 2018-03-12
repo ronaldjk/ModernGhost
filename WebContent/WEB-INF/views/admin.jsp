@@ -22,14 +22,18 @@ body {
 			<td>Place</td>
 			<td>Address</td>
 			<td>Description</td>
+			<td>Latitude</td>
+			<td>Longitude</td>
 		</tr>
 		<c:forEach var="myVar" items="${userList}">
 		<tr>
 			<td>${myVar.place}</td>
 			<td>${myVar.address}</td>
 			<td>${myVar.description}</td>
-			<td><a href="add?id=${myVar.place}">Add</a>
-			<td><a href="delete?id=${myVar.place}">Delete</a>
+			<td>${myVar.y}</td>
+			<td>${myVar.x}</td>
+			<td><a href="add?id=${myVar.id}&place=${myVar.place}&address=${myVar.address}&y=${myVar.y}&x=${myVar.x}">Add</a>
+			<td><a href="delete?id=${myVar.id}">Delete</a>
 		
 		</tr>
 		
@@ -37,6 +41,7 @@ body {
 		</c:forEach>
 		
 	</table>
+	<a href="logout">Log Out</a>
 	</div>
 </body>
 </html>

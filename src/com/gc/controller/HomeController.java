@@ -72,17 +72,37 @@ public class HomeController {
 		return new ModelAndView("adminlog", "fail", "Incorrect Username and/or Password");
 	}
 	
+	@RequestMapping("/logout")
+	public String logOut() {
+		return "index";
+	}
+	
 	@RequestMapping("/delete")
-	public ModelAndView deleteProduct(@RequestParam("id") String place) {
+	public ModelAndView deleteUserLoc(@RequestParam("id") int id) {
 		UserLoc ghost = new UserLoc();
-		ghost.setPlace(place);
+		ghost.setId(id);
 		UserLocDAOImp dao = new UserLocDAOImp();
 		dao.deleteUserLoc(ghost);
-
 		ArrayList<UserLoc> userList = dao.getAllUserLoc();
-
 		return new ModelAndView("admin", "userList", userList);
 
+	}
+	
+	@RequestMapping("/add")
+	public ModelAndView addAddress(@RequestParam("id") int id, @RequestParam("place") String place, @RequestParam("address") String address, @RequestParam("y") String y, @RequestParam("x") String x) {
+		Address userAdd = new Address();
+		userAdd.setPlace(place);
+		userAdd.setAddress(address);
+		userAdd.setY(y);
+		userAdd.setX(x);
+		AddressDAOImp dao = new AddressDAOImp();
+		dao.addAddress(userAdd);
+		UserLoc ghost = new UserLoc();
+		ghost.setId(id);
+		UserLocDAOImp dao2 = new UserLocDAOImp();
+		dao2.deleteUserLoc(ghost);
+		ArrayList<UserLoc> userList = dao2.getAllUserLoc();
+		return new ModelAndView("admin", "userList", userList);
 	}
 	
 	@RequestMapping("/submit")
