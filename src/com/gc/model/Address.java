@@ -41,6 +41,7 @@ public class Address {
 		this.y = y;
 		this.x = x;
 	}
+	
 
 	@Id
 	@Column(name = "id")

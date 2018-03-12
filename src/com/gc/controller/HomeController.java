@@ -35,9 +35,9 @@ public class HomeController {
 	// global variables to be used in all request mappings
 	// arraylists that hold distance results and name
 	int score = 0;
-	ArrayList<Integer> hitDbDist = new ArrayList<Integer>();
-	ArrayList<String> hitDbPlace = new ArrayList<String>();
-	ArrayList<Integer> hitApiDist = new ArrayList<Integer>();
+	ArrayList<Address> hitList = new ArrayList<Address>();
+	ArrayList<Integer> hitDistance = new ArrayList<Integer>();
+	ArrayList<Integer> trackHit = new ArrayList<Integer>();
 	Address toAdd;
 
 	//index page will return true (skipping fail message)
@@ -129,9 +129,7 @@ public class HomeController {
 	public String findGhost(@RequestParam("address") String address, Model model) {
 		// clears out score and arrayLists for all new searches
 		score = 0;
-		hitDbDist.clear();
-		hitDbPlace.clear();
-		hitApiDist.clear();
+		hitList.clear();
 		boolean validEntry = true;
 		boolean highScore = false;
 		boolean addedSuccess = false;
@@ -143,14 +141,16 @@ public class HomeController {
 		if(Address.isValidAddress(userEntry)) {
 			Double lat = Address.getLat(userEntry);
 			Double lng = Address.getLng(userEntry);
-	
+			Address userLoc = new Address("Your Location", address, lat.toString(), lng.toString());
+			hitList.add(userLoc);
+			
 			// Create an ArrayList of Address objects from database
 			AddressDAOImp dao = new AddressDAOImp();
 			ArrayList<Address> ghostList = dao.getAllAddress();
 	
 			// Loop through the database ArrayList & calculate score
 			// haunted locations
-			score = Calculations.calcDbScore(score, lat, lng, ghostList, hitDbPlace, hitDbDist);
+			score = Calculations.calcDbScore(score, lat, lng, ghostList, hitList, hitDistance, trackHit);
 	
 			try {
 				// 2014, 2015, 2016 Detroit data
@@ -159,9 +159,9 @@ public class HomeController {
 				JSONArray arr16 = Build.detroitAPIBuilder("/resource/g2xp-q8wj.json?$$app_token=");
 	
 				// API score calculator
-				score = Calculations.calcApiScore(score, lat, lng, arr14, 2014, hitApiDist);
-				score = Calculations.calcApiScore(score, lat, lng, arr15, 2015, hitApiDist);
-				score = Calculations.calcApiScore(score, lat, lng, arr16, 2016, hitApiDist);
+				score = Calculations.calcApiScore(score, lat, lng, arr14, 2014, hitList, hitDistance, trackHit);
+				score = Calculations.calcApiScore(score, lat, lng, arr15, 2015, hitList, hitDistance, trackHit);
+				score = Calculations.calcApiScore(score, lat, lng, arr16, 2016, hitList, hitDistance, trackHit);
 	
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
@@ -208,15 +208,26 @@ public class HomeController {
 	public ModelAndView ghostData(Model model) {
 		String listOfHits = "";
 		model.addAttribute("score", score);
-		for (int i = 0; i < hitDbDist.size(); i++) {
-			listOfHits += ("<li>" + "This location is " + hitDbDist.get(i)
-					+ " feet away from the known haunted location: " + hitDbPlace.get(i) + "</li>");
+		for (int i = 0; i < trackHit.size(); i++) {
+			if (trackHit.get(i) == 2) {
+				listOfHits += ("<li>" + "This location is " + hitDistance.get(i)
+				+ " feet away from the known haunted location: " + hitList.get(i+1).getPlace() + "</li>");
+			}
 		}
 
-		for (int i = 0; i < hitApiDist.size(); i++) {
-			listOfHits += ("<li>" + "This location is " + hitApiDist.get(i) + " feet away from a death." + "</li>");
+		for (int i = 0; i < trackHit.size(); i++) {
+			if (trackHit.get(i) == 1) {
+				listOfHits += ("<li>" + "This location is " + hitDistance.get(i) + " feet away from a death." + "</li>");
+			}
 
 		}
+		AddressDAOImp dao = new AddressDAOImp();
+		Gson gson = new Gson();
+		String json = gson.toJson(hitList);
+		model.addAttribute("ghost", json);
+		
+		String k = APICredentials.GOOGLE_KEY;
+		model.addAttribute("k", k);
 
 		return new ModelAndView("data", "data", listOfHits);
 	}
