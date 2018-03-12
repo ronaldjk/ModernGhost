@@ -28,7 +28,7 @@ html, body {
 	<script>
 	var map;
 		// adds markers to map according to lat, long, and shows address when clicked
-		function addMarker(lat, lon, address) {
+		function addMarker(lat, lon, place, address) {
 			
 				var iconBase = 'https://upload.wikimedia.org/wikipedia/commons/a/af/';
 				  var marker = new google.maps.Marker({
@@ -38,11 +38,14 @@ html, body {
 
 				  });
 			
-			var infowindow = new google.maps.InfoWindow({});
-			
 				google.maps.event.addListener(marker, 'click', (function (marker) {
+					var contentString = '<p><strong>'+place+'</strong></p>' +'<p>'+address+'</p>';
+					
+					var infowindow = new google.maps.InfoWindow({
+						content: contentString
+					});
+					
 					return function () {
-						infowindow.setContent(address);
 						infowindow.open(map, marker);
 					}
 				
@@ -74,7 +77,8 @@ html, body {
 				var y = ghostList[i].y;
 				var x = ghostList[i].x;
 				var add = ghostList[i].address;
-				addMarker(y, x, add);
+				var place = ghostList[i].place;
+				addMarker(y, x, place, add);
 			}
 		}
 	</script>
