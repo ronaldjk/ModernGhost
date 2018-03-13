@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,12 @@
 			<span>Enter Description: <input type="text" name="description" placeholder="ex: I saw a ghost" required></span><br>
 			<input type = "submit" value = "submit">	
 		</form>
+		<c:set var="validentry" value="${fail}" />
+		<c:if test="${validentry == false}">
+			<p>${failmsg}
+			</p>
+		</c:if>
+		
 	</div>
 </body>
 </html>
