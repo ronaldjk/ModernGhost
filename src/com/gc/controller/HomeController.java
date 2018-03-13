@@ -37,7 +37,6 @@ public class HomeController {
 	int score = 0;
 	ArrayList<Address> hitList = new ArrayList<Address>();
 	ArrayList<Integer> hitDistance = new ArrayList<Integer>();
-	ArrayList<Integer> trackHit = new ArrayList<Integer>();
 	Address toAdd;
 
 	//index page will return true (skipping fail message)
@@ -130,6 +129,8 @@ public class HomeController {
 		// clears out score and arrayLists for all new searches
 		score = 0;
 		hitList.clear();
+		//trackHit.clear();
+		hitDistance.clear();
 		boolean validEntry = true;
 		boolean highScore = false;
 		boolean addedSuccess = false;
@@ -150,7 +151,7 @@ public class HomeController {
 	
 			// Loop through the database ArrayList & calculate score
 			// haunted locations
-			score = Calculations.calcDbScore(score, lat, lng, ghostList, hitList, hitDistance, trackHit);
+			score = Calculations.calcDbScore(score, lat, lng, ghostList, hitList, hitDistance);
 	
 			try {
 				// 2014, 2015, 2016 Detroit data
@@ -159,9 +160,9 @@ public class HomeController {
 				JSONArray arr16 = Build.detroitAPIBuilder("/resource/g2xp-q8wj.json?$$app_token=");
 	
 				// API score calculator
-				score = Calculations.calcApiScore(score, lat, lng, arr14, 2014, hitList, hitDistance, trackHit);
-				score = Calculations.calcApiScore(score, lat, lng, arr15, 2015, hitList, hitDistance, trackHit);
-				score = Calculations.calcApiScore(score, lat, lng, arr16, 2016, hitList, hitDistance, trackHit);
+				score = Calculations.calcApiScore(score, lat, lng, arr14, 2014, hitList, hitDistance);
+				score = Calculations.calcApiScore(score, lat, lng, arr15, 2015, hitList, hitDistance);
+				score = Calculations.calcApiScore(score, lat, lng, arr16, 2016, hitList, hitDistance);
 	
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
@@ -208,27 +209,22 @@ public class HomeController {
 	public ModelAndView ghostData(Model model) {
 		String listOfHits = "";
 		model.addAttribute("score", score);
-		for (int i = 0; i < trackHit.size(); i++) {
-			if (trackHit.get(i) == 2) {
+		for (int i = 0; i < hitDistance.size(); i++) {
+			if(hitList.get(i+1).getPlace().equals("Death")) {
+				listOfHits += ("<li>" + "This location is " + hitDistance.get(i)
+				+ " feet away from a Death </li>");
+			}
+			else {
 				listOfHits += ("<li>" + "This location is " + hitDistance.get(i)
 				+ " feet away from the known haunted location: " + hitList.get(i+1).getPlace() + "</li>");
 			}
 		}
-
-		for (int i = 0; i < trackHit.size(); i++) {
-			if (trackHit.get(i) == 1) {
-				listOfHits += ("<li>" + "This location is " + hitDistance.get(i) + " feet away from a death." + "</li>");
-			}
-
-		}
-		AddressDAOImp dao = new AddressDAOImp();
+		
 		Gson gson = new Gson();
 		String json = gson.toJson(hitList);
 		model.addAttribute("ghost", json);
-		
 		String k = APICredentials.GOOGLE_KEY;
 		model.addAttribute("k", k);
-
 		return new ModelAndView("data", "data", listOfHits);
 	}
 	
@@ -236,7 +232,6 @@ public class HomeController {
 	@RequestMapping("/update")
 	public String addGhost(Model model, @RequestParam("name") String name) throws ClassNotFoundException, SQLException {
 		AddressDAOImp dao = new AddressDAOImp();
-		ArrayList<Address> ghostList = dao.getAllAddress();
 		boolean highScore = false;
 		boolean addedSuccess = true;
 		
