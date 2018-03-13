@@ -1,3 +1,27 @@
-body {
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: black;
+	text-align: center;
+}
 
+table, p, h1, h2, h3, span, li {
+	color: white;
+}
+
+a {
+	color: grey;
+}
+
+.fail {
+	color: red;
+}
+
+#map {
+	height: 100%;
+}
+
+#map p {
+	color: black;
 }
