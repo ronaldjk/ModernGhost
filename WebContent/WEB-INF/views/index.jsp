@@ -11,6 +11,9 @@
 	<div>
 		<a href="adminlog">Admin</a>
 	</div>
+	<div>
+		<a href="about">About</a>
+	</div>
 	<br>
 	<div class = "index body">
 		<p class="fail">${submit}</font><p>
