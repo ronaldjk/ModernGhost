@@ -1,13 +1,83 @@
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC:700|Oswald:300');
+
 html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
 	background-color: black;
+	font-family: 'Oswald', sans-serif;
 	text-align: center;
 }
 
 table, p, h1, h2, h3, span, li {
 	color: white;
+}
+
+/*Header Formatting*/
+.header {
+	display: fixed;
+	height: auto;
+	background: rgba(255,255,255,0.1);
+}
+
+.header .options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo, .dropdown {
+  margin: auto 6%;
+}
+
+.logo {
+  font-family: 'Amatic SC', cursive;
+  font-size: 20px;
+}
+
+.dropdown {
+  font-size: 16px;
+}
+
+.dropdown-content{
+	display: none;
+    position: absolute;
+	background: rgba(255,255,255,0.4);
+    min-width: 100px;
+    z-index: 1;
+}
+
+.header .dropdown:hover .dropdown-content{
+	display: block;
+}
+
+.dropdown-content a {
+	text-align: left;
+    color: white;
+    padding: 6px 6px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    color: black;
+}
+
+/**/
+.index {
+	padding-top: 10%;
+}
+
+.index input {
+	height: 30px;
+	width: 50px;
+	border-radius: 1em;
+}
+
+.index input.form {
+	font-family: 'Oswald', sans-serif;
+	height: 30px;
+	width: 200px;
+	border-radius: 1em;
 }
 
 a {

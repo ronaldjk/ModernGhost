@@ -8,20 +8,33 @@
 	<title>Modern Ghost</title>
 </head>
 <body>
-	<div>
-		<a href="adminlog">Admin</a>
-	</div>
-	<div>
-		<a href="about">About</a>
-	</div>
-	<br>
-	<div class = "index body">
-		<p class="fail">${submit}</font><p>
+
+	<div class="header">
+  		<div class = "options">
+        <div class = "logo">
+          <p>MODERN GHOST.</p>
+        </div>
+  		  <div class = "dropdown">
+  			     <p>Menu</p>
+  			     <div class= "dropdown-content">
+                 <a href="index">Home</a>
+                 <a href="about">About</a>
+                 <a href="map">Map</a>
+                 <a href="submit">Report</a>
+  				       <a href="adminlog">Admin</a>
+  			     </div>
+  		  </div>
+  		</div>
+	  </div>
+
+	<div class = "index">
 		<img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">
-		<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">
+        <img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">
+		
+		<p class="fail">${submit}</font><p>
 		<form action = "result">
-			<span>Enter Address:<input type ="text" name ="address" placeholder="ex: 123 Haunted St" required></span>
-			<input type = "submit" value = "submit">	
+			<input class="form" type ="text" name ="address" placeholder="Enter Detroit Street Address" required>
+			<input type = "submit" value = "Submit">	
 		</form>
 	
 		<!-- set valid entry, will be true for page initialization, will be false if invalid address -->
@@ -30,9 +43,7 @@
 			<p>${failmsg}
 			</p>
 		</c:if>
-		
-		<p><a href="submit">Click here</a> to submit a haunted location</p>
-		<p><a href="map">Click here</a> to view a map of known haunted locations</p>
+
 	</div>
 </body>
 </html>
