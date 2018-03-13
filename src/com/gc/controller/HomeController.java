@@ -255,5 +255,9 @@ public class HomeController {
 		dao.addAddress(toAdd);
 		return "result";
 	}
+	@RequestMapping("/about")
+	public String about() {
+		return "about";
+	}
 
 }

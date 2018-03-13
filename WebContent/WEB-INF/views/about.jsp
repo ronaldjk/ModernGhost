@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="./resources/style.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -18,7 +19,7 @@ our personal database for future reference, which will help future hunters track
 
 
 
-<a href = "https://ghosthuntersequipment.com/#" >Need up to date equipment Click here</a>
+<a href = "https://ghosthuntersequipment.com/#" >Need new equipment? Click here!</a>
 
 
 </body>
