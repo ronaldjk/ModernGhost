@@ -148,3 +148,14 @@ input[type="submit"]{
 	font-family: 'Amatic SC', cursive;
 	font-size: 230px;
 }
+.index h1 {
+	display: inline;
+	color: white;
+	font-family: 'Amatic SC', cursive;
+	font-size: 180px;
+}
+
+.about {
+	width: 60%;
+	margin: auto;
+}

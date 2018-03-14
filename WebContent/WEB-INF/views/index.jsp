@@ -28,10 +28,12 @@
 	  </div>
 
 	<div class = "index">
+		<h1>Modern</h1>
 		<!--  <img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">-->
 		<img src="http://moziru.com/images/drawn-ghostly-clipart-transparent-background-2.png" height="200px">
         <!--<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">-->
-		<span class="test">?</span>
+<!-- 		<span class="test">?</span> -->
+		<h1>Ghost</h1>
 		<!--<img src="http://worldartsme.com/images/animated-question-mark-clipart-1.jpg" height="190" width="120">-->
 		
 		
