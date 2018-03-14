@@ -32,8 +32,7 @@ import com.google.gson.Gson;
 
 @Controller
 public class HomeController {
-	// global variables to be used in all request mappings
-	// arraylists that hold distance results and name
+	// global variables to be used in multiple request mappings
 	int score = 0;
 	ArrayList<Address> hitList = new ArrayList<Address>();
 	ArrayList<Integer> hitDistance = new ArrayList<Integer>();

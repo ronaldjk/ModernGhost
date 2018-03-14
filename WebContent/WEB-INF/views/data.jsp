@@ -11,14 +11,35 @@
 	<title>Location Result</title>
 </head>
 <body>
-	<h3>Your house was rated at ${score}% because: </h3>
-	<br>
-	${data}
-	<br>
-	<script>
-		// creating a variable of the JSONArray
-		var ghostList = ${ghost};
-	</script>
+	<div class="header">
+  		<div class = "options">
+        <div class = "logo">
+          <p>MODERN GHOST.</p>
+        </div>
+  		  <div class = "dropdown">
+   			<p>Menu</p>
+   			<div class= "dropdown-content">
+         		<a href="./">Home</a>
+         		<a href="about">About</a>
+         		<a href="map">Map</a>
+         		<a href="submit">Report</a>
+				<a href="adminlog">Admin</a>
+		  	</div>
+  		  </div>
+  		</div>
+	 </div>
+
+	<div class="data">
+		<h3>Your location was rated at ${score}% because: </h3>
+		<br>
+		${data}
+		<br>
+		<script>
+			// creating a variable of the JSONArray
+			var ghostList = ${ghost};
+		</script>
+	</div>
+	
 	<div id="map">
 		<script>
 			var map;

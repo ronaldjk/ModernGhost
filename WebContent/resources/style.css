@@ -41,7 +41,7 @@ table, p, h1, h2, h3, span, li {
 .dropdown-content{
 	display: none;
     position: absolute;
-	background: rgba(255,255,255,0.4);
+	background: rgba(255,255,255,0.8);
     min-width: 100px;
     z-index: 1;
 }
@@ -52,7 +52,7 @@ table, p, h1, h2, h3, span, li {
 
 .dropdown-content a {
 	text-align: left;
-    color: white;
+    color: dimgray;
     padding: 6px 6px;
     text-decoration: none;
     display: block;
@@ -63,8 +63,9 @@ table, p, h1, h2, h3, span, li {
 }
 
 /**/
-.index {
-	padding-top: 10%;
+.index, .admin, .adminLog, .result, .submit{
+	padding-top: 8%;
+	padding-bottom: 4%;
 }
 
 .index input {

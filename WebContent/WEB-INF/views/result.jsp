@@ -8,8 +8,25 @@
 	<title>Location Result</title>
 </head>
 <body>
-	<br>
-	<div>
+	<div class="header">
+  		<div class = "options">
+        <div class = "logo">
+          <p>MODERN GHOST.</p>
+        </div>
+  		  <div class = "dropdown">
+   			<p>Menu</p>
+   			<div class= "dropdown-content">
+         		<a href="./">Home</a>
+         		<a href="about">About</a>
+         		<a href="map">Map</a>
+         		<a href="submit">Report</a>
+				<a href="adminlog">Admin</a>
+		  	</div>
+  		  </div>
+  		</div>
+	 </div>
+	
+	<div class="result">
 		<c:choose> 
   			<c:when test= "${(message >= 85)}">
 				<img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">
@@ -65,7 +82,7 @@
 		</c:if>
 	
 		<p><a href="data">Click here</a> to see the reason(s) behind why your location is haunted</p>
-		<p><a href="map">Click here</a> to view a map of known haunted locations</p>
+		
 	</div>
 </body>
 </html>

@@ -17,11 +17,11 @@
   		  <div class = "dropdown">
   			     <p>Menu</p>
   			     <div class= "dropdown-content">
-                 <a href="index">Home</a>
+                 <a href="">Home</a>
                  <a href="about">About</a>
                  <a href="map">Map</a>
                  <a href="submit">Report</a>
-  				       <a href="adminlog">Admin</a>
+  				 <a href="adminlog">Admin</a>
   			     </div>
   		  </div>
   		</div>

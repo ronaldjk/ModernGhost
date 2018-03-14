@@ -10,11 +10,29 @@
 	<title>Ghost Map</title>
 </head>
 <body>
+	<div class="header">
+  		<div class = "options">
+        <div class = "logo">
+          <p>MODERN GHOST.</p>
+        </div>
+  		  <div class = "dropdown">
+   			<p>Menu</p>
+   			<div class= "dropdown-content">
+         		<a href="./">Home</a>
+         		<a href="about">About</a>
+         		<a href="map">Map</a>
+         		<a href="submit">Report</a>
+				<a href="adminlog">Admin</a>
+		  	</div>
+  		  </div>
+  		</div>
+	 </div>
+
 	<script>
 		// creating a variable of the JSONArray
 		var ghostList = ${ghost};
 	</script>
-	<div id="map">
+	<div id="map" class="map">
 		<script>
 			var map;
 			
