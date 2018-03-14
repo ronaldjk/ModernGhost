@@ -146,6 +146,7 @@ public class HomeController {
 		boolean validEntry = true;
 		boolean highScore = false;
 		boolean addedSuccess = false;
+		boolean knownLoc = false;
 
 		// user input & convert to latitude and longitude
 		String userEntry = Address.formatAddress(address);
@@ -186,11 +187,16 @@ public class HomeController {
 				score = 100;
 			}
 
+			if(Calculations.getKnownLoc() == 1) {
+				knownLoc = true;
+			}
+			
 			// adds high scoring houses to databases
 			if (score >= 85 && (Calculations.getKnownLoc() != 1)) {
 				toAdd = new Address(address, Double.toString(lat), Double.toString(lng));
 				highScore = true;
 			}
+			model.addAttribute("knownLoc", knownLoc);
 			model.addAttribute("added", addedSuccess);
 			model.addAttribute("highScore", highScore);
 			model.addAttribute("message", score);
@@ -221,6 +227,10 @@ public class HomeController {
 	public ModelAndView ghostData(Model model) {
 		String listOfHits = "";
 		model.addAttribute("score", score);
+		if(score == 0) {
+			listOfHits += ("<p>This location isn't near any known locations or deaths.</p>");
+		}
+		
 		for (int i = 0; i < hitDistance.size(); i++) {
 			if (hitList.get(i + 1).getPlace().equals("Death")) {
 				listOfHits += ("<li>" + "This location is " + hitDistance.get(i) + " feet away from a Death </li>");

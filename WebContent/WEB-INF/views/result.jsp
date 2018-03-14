@@ -29,8 +29,11 @@
 	<div class="result">
 		<c:choose> 
   			<c:when test= "${(message >= 85)}">
-				<img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">
-				<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0143.png?v=1369543490" height="200" width="90"> 
+				<!--  <img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">-->
+				<img src="http://moziru.com/images/drawn-ghostly-clipart-transparent-background-2.png" height="200px">
+			       <!--<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">-->
+				<span class="test">!</span>
+				<!--<img src="http://worldartsme.com/images/animated-question-mark-clipart-1.jpg" height="190" width="120">-->
 			</c:when>
 			<c:when test= "${(message >= 73)}">
 				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAADqCAMAAAD3THt5AAAAFVBMVEUAAAD9w9T/v1f9OxFJ38rn698jP4uKXsJBAAAB0klEQVR4nO3cS04DQRBEQfMx9z8yEowsGpWT7pkaZES8JUq7K5Ys4HKRJEmSJEma6TnU+c5rqPOdW2AHA+sK7GBgB3r7WoINw1bKOUowMDAwsI+unw33bj8bRWF4Imm/DwwMDAzso/HeqhIWhvOi8eOBUg7BwMDAwB4dFr7kmkhDYGBgYGDrsOrs51AYLsOGX4HeAmwcgoGBgYHNwNLZHZWiTti2AAMDA/v7sNK3cwgGBgYG9uiwlsDAwMDAwMDAwMDAwMDAwMDAwMDAwMD+AWyCPv0ll+qMiQvDAgwMDAxsAVaedsIivD8NKy8HAwMDOwMmSd093a/1nZf7tb5zC+xgYF2BHQxsf4GS6qSkwMDAwMAOwnaKln07Rft9YGBgYGCNpJ99203jH1uG4yeGYGBgYGB7YePXhePTsHzmGkqkMAQDAwMDW4aldxOpGpbPjP8rK907PQQDAwMDm4HNnrsM++Yrzu2B3fOBgYGBtcHK5yvYxHCEbU0cujgEAwMDA1uAbY33Vov5YQk7ITAwMDCwZVhnYGBgYGBgYGBgYGBgYGBgYGC/A+tY1LCEHa5LCzAwMDCwBVh128+LchIX4flpWPo0GBgYWCtMkiRJkiRVvQO61GQ/5pFs6gAAAABJRU5ErkJggg==">
@@ -69,8 +72,12 @@
 		
 		<h2>Your location is ${message}% haunted</h2>
 		
+		<c:set var="knownLoc" value="${knownLoc}" />
 		<c:set var="highScore" value="${highScore}" />
 		<c:set var="addedSuccess" value="${added}" />
+		<c:if test="${knownLoc == true}">
+			<p>You selected a known location!</p>
+		</c:if>
 		<c:if test="${highScore == true}">
 			<form action="update" method="post">
 				<span>Name: <input type= "text" name="name" placeholder ="Enter place name: "></span>

@@ -28,12 +28,15 @@
 	 </div>
 
 	<div class = "submit">
-		<img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">
-		<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">
+		<!--  <img src="https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_large.png?v=1480481053" height="200" width="200">-->
+		<img src="http://moziru.com/images/drawn-ghostly-clipart-transparent-background-2.png" height="200px">
+        <!--<img src="https://cdn.shopify.com/s/files/1/0185/5092/products/symbols-0144.png?v=1369543276" height="200" width="120">-->
+		<span class="test">?</span>
+		<!--<img src="http://worldartsme.com/images/animated-question-mark-clipart-1.jpg" height="190" width="120">-->
 		<form action = "subghost" method="POST">
-			<span>Enter Location Name: <input type="text" name="place" placeholder="ex: Spooky Building" required></span><br>
-			<span>Enter Address: <input type="text" name="address" placeholder="ex: 123 Haunted St" required></span><br>
-			<span>Enter Description: <input type="text" name="description" placeholder="ex: I saw a ghost" required></span><br>
+			<span>Enter Location Name:</span> <input class="form" type="text" name="place" placeholder="ex: Spooky Building" required><br>
+			<span>Enter Address:</span> <input class="form address" type="text" name="address" placeholder="ex: 123 Haunted St" required><br>
+			<span>Enter Description:</span> <input class="form description" type="text" name="description" placeholder="ex: I saw a ghost" required><br>
 			<input type = "submit" value = "submit">	
 		</form>
 		<c:set var="validentry" value="${fail}" />

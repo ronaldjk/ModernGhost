@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC:700|Oswald:300');
 
+/*General Formatting*/
 html, body {
 	height: 100%;
 	margin: 0;
@@ -7,10 +8,24 @@ html, body {
 	background-color: black;
 	font-family: 'Oswald', sans-serif;
 	text-align: center;
+	text-size: 16px;
 }
 
 table, p, h1, h2, h3, span, li {
 	color: white;
+}
+
+.index, .admin, .adminLog, .result, .submit {
+	padding-top: 8%;
+	padding-bottom: 4%;
+}
+
+a {
+	color: grey;
+}
+
+.fail {
+	color: red;
 }
 
 /*Header Formatting*/
@@ -62,37 +77,74 @@ table, p, h1, h2, h3, span, li {
     color: black;
 }
 
-/**/
-.index, .admin, .adminLog, .result, .submit{
-	padding-top: 8%;
-	padding-bottom: 4%;
-}
-
+/*Index page*/
 .index input {
+	margin-right: 10px;
+	text-align: center;
 	height: 30px;
-	width: 50px;
-	border-radius: 1em;
 }
 
 .index input.form {
+	font-size: 16px;
 	font-family: 'Oswald', sans-serif;
 	height: 30px;
 	width: 200px;
-	border-radius: 1em;
+	border: none;
+	border-radius: .7em;
 }
 
-a {
-	color: grey;
+/*All submit buttons and forms*/
+::placeholder{
+	text-align: center;
 }
 
-.fail {
-	color: red;
+input[type="submit"]{
+	font-size: 16px;
+	font-family: 'Oswald', sans-serif;
+	color: white;
+	background-color: dimgrey;
+	border: none;
+	border-radius: .5em;
 }
 
+/*Map page*/
 #map {
 	height: 100%;
 }
 
 #map p {
 	color: black;
+}
+
+/*submit page*/
+.submit form {
+	margin-top: 10px;
+}
+
+.submit input {
+	text-wrap: wrap;
+	text-align: center;
+}
+
+.submit input.form {
+	margin: 3px 3px;
+	font-size: 16px;
+	font-family: 'Oswald', sans-serif;
+	height: 20px;
+	border-radius: .5em;
+}
+
+.submit input.address {
+	width: 200px;
+}
+
+.submit input.description {
+	width: 300px;
+}
+
+.test {
+	display: inline;
+	color: white;
+	font-family: 'Amatic SC', cursive;
+	font-size: 230px;
 }
