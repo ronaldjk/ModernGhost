@@ -117,20 +117,21 @@ input[type="submit"]{
 }
 
 /*submit page*/
-.submit form {
+.submit form, .result form {
 	margin-top: 10px;
 }
 
-.submit input {
+.submit input, .result input {
 	text-wrap: wrap;
 	text-align: center;
 }
 
-.submit input.form {
+.submit input.form, .result input.form {
 	margin: 3px 3px;
 	font-size: 16px;
 	font-family: 'Oswald', sans-serif;
-	height: 20px;
+	height: 30px;
+	border: none;
 	border-radius: .5em;
 }
 

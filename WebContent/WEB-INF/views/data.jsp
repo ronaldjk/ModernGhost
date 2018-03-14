@@ -67,10 +67,10 @@
 			function initMap() {
 				map = new google.maps.Map(document.getElementById('map'), {
 					center: {
-						lat: 42.3496817,
-						lng: -83.0559651
+						lat: parseFloat(ghostList[0].y),
+						lng: parseFloat(ghostList[0].x)
 					},
-					zoom: 12
+					zoom: 15
 				});
 				// calling the parseJSON function to iterated through the array
 				parseJSON();

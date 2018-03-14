@@ -80,7 +80,7 @@
 		</c:if>
 		<c:if test="${highScore == true}">
 			<form action="update" method="post">
-				<span>Name: <input type= "text" name="name" placeholder ="Enter place name: "></span>
+				<span>Name: </span><input class="form" type= "text" name="name" placeholder ="Enter place name: ">
 				<input type = "submit" value = "Add">
 			</form>	
 		</c:if >
