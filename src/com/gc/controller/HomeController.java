@@ -147,6 +147,7 @@ public class HomeController {
 		boolean highScore = false;
 		boolean addedSuccess = false;
 		boolean knownLoc = false;
+		Calculations.setKnownLoc(0);
 
 		// user input & convert to latitude and longitude
 		String userEntry = Address.formatAddress(address);

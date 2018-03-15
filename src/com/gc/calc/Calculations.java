@@ -12,6 +12,10 @@ public class Calculations {
 	public static int getKnownLoc() {
 		return knownLoc;
 	}
+	
+	public static void setKnownLoc(int knownLoc) {
+        Calculations.knownLoc = knownLoc;
+    }
 
 	public static double distance(double lat1, double lat2, double lon1, double lon2) {
 
