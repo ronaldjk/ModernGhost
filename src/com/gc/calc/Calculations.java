@@ -36,10 +36,11 @@ public class Calculations {
 		String gLng = "";
 		for (int i = 0; i < arr.length(); i++) {
 			if (year == 16 || year == 2016) {
-				gLat = arr.getJSONObject(i).getJSONObject("location").getJSONArray("coordinates").get(0).toString();
-				gLng = arr.getJSONObject(i).getJSONObject("location").getJSONArray("coordinates").get(1).toString();
+				gLat = arr.getJSONObject(i).getJSONObject("location").getJSONArray("coordinates").get(1).toString();
+				gLng = arr.getJSONObject(i).getJSONObject("location").getJSONArray("coordinates").get(0).toString();
 				ghostLat = Double.parseDouble(gLat);
 				ghostLng = Double.parseDouble(gLng);
+				
 			} else {
 				gLat = arr.getJSONObject(i).get("y").toString();
 				gLng = arr.getJSONObject(i).get("x").toString();
